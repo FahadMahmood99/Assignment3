@@ -36,7 +36,6 @@ public class Register extends AppCompatActivity {
                 Intent intent = new Intent(Register.this, Login.class);
                startActivity(intent);
 
-
             }
         });
 

@@ -49,7 +49,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             return true;
         }
-
     }
 
     public List<CustomerModel> getEveryone()

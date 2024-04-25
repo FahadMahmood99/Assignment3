@@ -10,7 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 
-
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
