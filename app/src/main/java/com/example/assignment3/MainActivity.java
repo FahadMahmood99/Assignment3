@@ -8,8 +8,8 @@ import java.util.List;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-import java.util.ArrayList;
-import java.util.List;
+
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,17 +22,20 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview);
 
-        ArrayList<CustomerModel> items = new ArrayList<CustomerModel>();
+        //ArrayList<CustomerModel> items = new ArrayList<CustomerModel>();
 
         DatabaseHelper databaseHelper1=new DatabaseHelper(MainActivity.this);
         List<CustomerModel> everyone=databaseHelper1.getEveryone();
 
+
+        //Setting the layout for my app
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
         Adapter adapter = new Adapter(this, everyone);
         recyclerView.setAdapter(adapter);
+
+
 
         //Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
 

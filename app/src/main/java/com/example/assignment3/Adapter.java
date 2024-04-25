@@ -18,7 +18,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
     Context context;
     ArrayList<CustomerModel> customerModel;
-    List<CustomerModel> items;
+    //List<CustomerModel> items;
 
     public Adapter(Context c, List<CustomerModel> list) {
         context = c;
@@ -45,10 +45,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         return customerModel.size();
     }
 
-    public void setItems(ArrayList<CustomerModel> items) {
-        this.items = items;
-        notifyDataSetChanged(); // Notify RecyclerView to refresh
-    }
+//    public void setItems(ArrayList<CustomerModel> items) {
+//        this.items = items;
+//        notifyDataSetChanged(); // Notify RecyclerView to refresh
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder
     {

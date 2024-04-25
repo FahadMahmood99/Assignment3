@@ -24,7 +24,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-
         email=findViewById(R.id.email);
         pass=findViewById(R.id.pass);
         sign=findViewById(R.id.sign);
@@ -66,7 +65,7 @@ public class Register extends AppCompatActivity {
 
 
                 Intent intent = new Intent(Register.this, MainActivity.class);
-                intent.putExtra("newCustomer", customerModel);
+                //intent.putExtra("newCustomer", customerModel);
                 startActivity(intent);
             }
         });

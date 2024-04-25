@@ -29,9 +29,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
 
     public boolean addOne(CustomerModel customerModel){
 
