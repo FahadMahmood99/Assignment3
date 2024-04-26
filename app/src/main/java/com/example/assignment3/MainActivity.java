@@ -13,28 +13,25 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
-
+    Adapter adapter;
+    ArrayList<CustomerModel> customerModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recyclerview);
-
-        //ArrayList<CustomerModel> items = new ArrayList<CustomerModel>();
-
         DatabaseHelper databaseHelper1=new DatabaseHelper(MainActivity.this);
         List<CustomerModel> everyone=databaseHelper1.getEveryone();
 
+        customerModel = new ArrayList<>(everyone);
 
         //Setting the layout for my app
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        Adapter adapter = new Adapter(this, everyone);
+        adapter = new Adapter(this, customerModel);
         recyclerView.setAdapter(adapter);
-
-
 
         //Toast.makeText(MainActivity.this, everyone.toString(), Toast.LENGTH_SHORT).show();
 
@@ -54,7 +51,15 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        }
 
-
-
     }
+
+    public void onUpdateContact(int index, String[] values) {
+        customerModel.get(index).setEmail(values[0]);
+        customerModel.get(index).setPassword(values[1]);
+        adapter.notifyDataSetChanged();
+    }
+
+
+
+
 }

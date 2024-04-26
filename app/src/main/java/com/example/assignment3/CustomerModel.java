@@ -14,14 +14,14 @@ public class CustomerModel implements Serializable {
         this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "customerModel{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "customerModel{" +
+//                "id=" + id +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                '}';
+//    }
 
     public int getId() {
         return id;
