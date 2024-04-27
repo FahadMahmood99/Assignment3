@@ -2,6 +2,7 @@ package com.example.assignment3;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,13 +23,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     Context context;
     ArrayList<CustomerModel> customerModel;
 
-    public interface DeleteContact
-    {
-        public void onDeleteContact(int index);
-        public void onUpdateContact(int index, String []values);
-    }
-
-
     public Adapter(Context c, List<CustomerModel> list) {
         context = c;
         customerModel = new ArrayList<>(list);
@@ -48,7 +42,39 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.email.setText(customerModel.get(position).getEmail());
         holder.password.setText(customerModel.get(position).getPassword());
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
 
+            @Override
+            public boolean onLongClick(View v) {
+
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(holder.itemView.getContext());
+                alertDialog.setMessage("Do you really want to delete?");
+                alertDialog.setTitle("Delete Email and Password");
+
+                alertDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        DatabaseHelper database = new DatabaseHelper(context);
+                        database.open();
+                        database.deleteContact(customerModel.get(holder.getAdapterPosition()).getId());
+                        database.close();
+
+                        parentActivity.onDeleteContact(holder.getAdapterPosition());
+                    }
+                });
+
+                alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                alertDialog.show();
+
+                return false;
+            }
+        });
 
         holder.ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,9 +96,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
                 btnEditContact = view.findViewById(R.id.btnUpdate);
                 btnCancel = view.findViewById(R.id.btnCancel);
 
-
-                  newEmail.setText(customerModel.get(holder.getAdapterPosition()).getEmail());
-                  newPassword.setText(customerModel.get(holder.getAdapterPosition()).getPassword());
+                newEmail.setText(customerModel.get(holder.getAdapterPosition()).getEmail());
+                newPassword.setText(customerModel.get(holder.getAdapterPosition()).getPassword());
 
                 btnEditContact.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -108,7 +133,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
 //    public void setItems(ArrayList<CustomerModel> items) {
 //        this.items = items;
-//        notifyDataSetChanged(); // Notify RecyclerView to refresh
+//  notifyDataSetChanged(); // Notify RecyclerView to refresh
 //    }
 
     public class ViewHolder extends RecyclerView.ViewHolder

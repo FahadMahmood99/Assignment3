@@ -90,7 +90,6 @@ public class DatabaseHelper {
 
             String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
 
-
             Cursor cursor = db.rawQuery(queryString, null);
 
             if (cursor.moveToFirst()) {
@@ -111,22 +110,34 @@ public class DatabaseHelper {
             return returnList;
         }
 
-        public void updateContact(int id, String newEmail, String newPassword) {
-
-            ContentValues cv = new ContentValues();
-            cv.put(COLUMN_CUSTOMER_EMAIL, newEmail);
-            cv.put(COLUMN_CUSTOMER_PASSWORD, newPassword);
-
-            int rows = db.update(CUSTOMER_TABLE, cv, COLUMN_ID + "=?", new String[]{id + ""});
-
-            if (rows > 0) {
-                Toast.makeText(context, "Contact updated successfully", Toast.LENGTH_SHORT).show();
-
-            } else {
-                Toast.makeText(context, "Failed to update contact", Toast.LENGTH_SHORT).show();
-            }
+    public void deleteContact(int id)
+    {
+        int rows = db.delete(CUSTOMER_TABLE, COLUMN_ID+"=?", new String[]{id+""});
+        if(rows > 0)
+        {
+            Toast.makeText(context, "Contact deleted successfully", Toast.LENGTH_SHORT).show();
         }
+        else
+        {
+            Toast.makeText(context, "Contact not deleted", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    public void updateContact(int id, String newEmail, String newPassword) {
+
+        ContentValues cv = new ContentValues();
+        cv.put(COLUMN_CUSTOMER_EMAIL, newEmail);
+        cv.put(COLUMN_CUSTOMER_PASSWORD, newPassword);
+
+        int rows = db.update(CUSTOMER_TABLE, cv, COLUMN_ID + "=?", new String[]{id + ""});
+
+        if (rows > 0) {
+            Toast.makeText(context, "Contact updated successfully", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(context, "Failed to update contact", Toast.LENGTH_SHORT).show();
+        }
+    }
 
 
 }

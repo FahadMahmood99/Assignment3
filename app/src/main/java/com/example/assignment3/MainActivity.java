@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
@@ -50,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
 //                items.add(newItem);
 //            }
 //        }
+    }
+
+    public void onDeleteContact(int index) {
+
+        customerModel.remove(index);
+        adapter.notifyDataSetChanged();
 
     }
 
@@ -58,8 +63,5 @@ public class MainActivity extends AppCompatActivity {
         customerModel.get(index).setPassword(values[1]);
         adapter.notifyDataSetChanged();
     }
-
-
-
 
 }
