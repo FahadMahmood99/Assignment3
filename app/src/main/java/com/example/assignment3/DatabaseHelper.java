@@ -67,48 +67,81 @@ public class DatabaseHelper {
 
         open();
 
-            ContentValues cv = new ContentValues();
+        ContentValues cv = new ContentValues();
 
-            cv.put(COLUMN_CUSTOMER_EMAIL, customerModel.getEmail());
-            cv.put(COLUMN_CUSTOMER_PASSWORD, customerModel.getPassword());
+        cv.put(COLUMN_CUSTOMER_EMAIL, customerModel.getEmail());
+        cv.put(COLUMN_CUSTOMER_PASSWORD, customerModel.getPassword());
 
-            long insert = db.insert(CUSTOMER_TABLE, null, cv);
+        long insert = db.insert(CUSTOMER_TABLE, null, cv);
 
-
-            if (insert == -1) {
-                return false;
-            } else {
-                return true;
-            }
+        if (insert == -1) {
+            return false;
+        } else {
+            return true;
         }
+    }
 
-        public List<CustomerModel> getEveryone() {
+    public List<CustomerModel> getEveryone() {
 
         open();
 
-            List<CustomerModel> returnList = new ArrayList<>();
+        List<CustomerModel> returnList = new ArrayList<>();
 
-            String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
+        String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
 
-            Cursor cursor = db.rawQuery(queryString, null);
+        Cursor cursor = db.rawQuery(queryString, null);
 
-            if (cursor.moveToFirst()) {
-                do {
-                    int customerID = cursor.getInt(0);
-                    String customeremail = cursor.getString(1);
-                    String customerpassword = cursor.getString(2);
+        if (cursor.moveToFirst()) {
+            do {
+                int customerID = cursor.getInt(0);
+                String customeremail = cursor.getString(1);
+                String customerpassword = cursor.getString(2);
 
-                    CustomerModel newCustomer = new CustomerModel(customerID, customeremail, customerpassword);
-                    returnList.add(newCustomer);
+                CustomerModel newCustomer = new CustomerModel(customerID, customeremail, customerpassword);
+                returnList.add(newCustomer);
 
-                } while (cursor.moveToNext());
-            } else {
-            }
-
-            cursor.close();
-            db.close();
-            return returnList;
+            } while (cursor.moveToNext());
+        } else {
         }
+
+        cursor.close();
+        db.close();
+        return returnList;
+    }
+
+    public boolean checkUser(String email, String password) {
+        open();
+
+        // Define the columns you want to fetch
+        String[] columns = {COLUMN_ID};
+
+        // Specify the WHERE clause
+        String selection = COLUMN_CUSTOMER_EMAIL + "=? AND " + COLUMN_CUSTOMER_PASSWORD + "=?";
+        // Arguments for the WHERE clause
+        String[] selectionArgs = {email, password};
+
+        // Query the database
+        Cursor cursor = db.query(
+                CUSTOMER_TABLE,
+                columns,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        // Check if a row with the given email and password exists
+        boolean isValid = cursor.moveToFirst();
+
+        // Close cursor and database
+        cursor.close();
+        db.close();
+
+        return isValid;
+    }
+
+
 
     public void deleteContact(int id)
     {
